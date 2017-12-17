@@ -5,6 +5,10 @@ class PokemonController < ApplicationController
   def show
     response = HTTParty.get("http://pokeapi.co/api/v2/pokemon/#{params[:id]}/")
     body = JSON.parse(response.body)
+
+    if body["detail"] == "Not found."
+      render json: { message: "Sorry, we don't have that Pokemon."}
+    else
     name = body["name"]
     id = body["id"]
     types = body["types"].map {|type| type["type"]["name"]}
@@ -19,5 +23,6 @@ class PokemonController < ApplicationController
       types: types,
       gif: gif_url,
     }
+    end
   end
 end
