@@ -8,7 +8,7 @@ class PokemonController < ApplicationController
     body = JSON.parse(response.body)
 
     if body["detail"] == "Not found."
-      render json: { message: "Sorry, we don't have that Pokemon."}
+      render html: "<strong>Sorry, we don't have that pokemon.</strong>".html_safe
     else
       name = body["name"]
       id = body["id"]
