@@ -7,7 +7,7 @@ class PokemonController < ApplicationController
     response = HTTParty.get("http://pokeapi.co/api/v2/pokemon/#{params[:id]}/")
     body = JSON.parse(response.body)
 
-    if body["detail"] == "Not found."
+    if response.code == 404
       render html: "<strong>Sorry, we don't have that pokemon.</strong>".html_safe
     else
       name = body["name"]
